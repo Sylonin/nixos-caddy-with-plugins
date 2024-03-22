@@ -25,7 +25,7 @@
   in {
     # nix build
     packages = perSystem (system: pkgs: {
-      caddy = pkgs.buildGo120Module {
+      caddy = pkgs.buildGoModule {
         pname = "caddy";
         inherit version;
         src = ./caddy-src;
@@ -36,15 +36,13 @@
     });
 
     # Default module
-    nixosModules.default = import ./nix inputs;
+    nixosModules.default = import ./modules inputs;
 
     # nix develop
     devShells = perSystem (_: pkgs: {
       default = pkgs.mkShell {
         nativeBuildInputs = with pkgs; [
-          nix
-          git
-          go_1_20
+          go
         ];
       };
     });
